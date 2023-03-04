@@ -1,5 +1,4 @@
 <template>
-<h1>Main works</h1>
   <Weather></Weather>
 </template>
 

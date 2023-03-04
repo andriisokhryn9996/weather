@@ -4,14 +4,14 @@
     <input class="search_input" placeholder="Search City" id="cityInput" type="text" v-model="cityName"
            @input="updateSuggestions(cityName)"/>
     <div class="search_list">
-      <ul v-show="getCityList && getCityList.length && !wait">
-        <li v-for="city in getCityList" :key="city.id" @click="selectSuggestion(city.name)">
-          <span> {{ city.name }}, {{ city.sys.country }}</span>
-          <span><img :src="getIcon(city.weather[0].icon)" :alt="city.weather[0].icon"></span>
-          <span>{{ Math.round(city.main.temp) }}</span>
-        </li>
-      </ul>
-      <div v-if="wait" class="spinner"></div>
+       <ul v-show="getCityList && getCityList.length && !wait">
+         <li v-for="city in getCityList" :key="city.id" @click="selectSuggestion(city.name)">
+           <span> {{ city.name }}, {{ city.sys.country }}</span>
+           <span><img :src="getIcon(city.weather[0].icon)" :alt="city.weather[0].icon"></span>
+           <span>{{ Math.round(city.main.temp) }}</span>
+         </li>
+       </ul>
+       <div v-if="wait" class="spinner"></div>
     </div>
 
   </div>
@@ -62,13 +62,12 @@ export default {
       }
     },
     selectSuggestion(suggestion) {
-      this.cityName = suggestion;
       this.updateCityList(null)
-      this.fetchWeatherData({city: this.cityName});
+      this.fetchWeatherData({city: suggestion});
+      this.cityName = '';
     },
   },
   mounted() {
-    // this.fetchCityList({city: 'Vinnytsia'})
 
   }
 }
@@ -78,42 +77,27 @@ export default {
 .search {
   display: flex;
   flex-direction: column;
+  position: relative;
 }
 
 .search_input {
-  border: 2px solid #2d333b;
+  border: 1px solid #86898d;
   border-radius: 20px;
   padding: 12px 16px;
   font-size: 16px;
-  color: #f5f8fa;
-  background-color: #21262d;
-}
-
-.search_input::placeholder {
-  color: #6c757d;
-}
-
-.search_input:-ms-input-placeholder {
-  color: #6c757d;
-}
-
-.search_input::-ms-input-placeholder {
-  color: #6c757d;
-}
-
-.search_input:focus {
-  border-color: #1da1f2;
-  box-shadow: 0 0 0 2px #1da1f2;
-}
-
-.search_input::-webkit-input-placeholder {
-  color: #6c757d;
+  background-color: #d4d6da;
 }
 
 .search_list {
+  position: absolute;
+  z-index:5;
+  width: 100%;
+  top: 110%;
+  -webkit-box-shadow: 0px 3px 11px -4px rgba(0,0,0,0.74);
+  box-shadow: 0px 3px 11px -4px rgba(0,0,0,0.74);
   border-radius: 8px;
-  background-color: #21262d;
-  color: #f5f8fa;
+  background-color: #747984;
+
   font-size: 16px;
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -125,18 +109,23 @@ export default {
 
 .search_list li {
   padding: 8px;
+  background: #e6eaed;
+  border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: all 200ms;
 }
 
 .search_list li span {
   padding: 0 16px;
+  font-weight: bold;
 }
 
-search_list. li:hover {
-  background: #6c757d;
+.search_list li:hover {
+  background-color: #747984;
   cursor: pointer;
+  padding: 8px;
 }
 
 /*spinner START*/
@@ -145,7 +134,7 @@ search_list. li:hover {
   width: 20px;
   height: 20px;
   position: relative;
-  margin: 20px auto;
+  margin:  auto;
 }
 
 .spinner:before {

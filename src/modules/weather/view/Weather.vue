@@ -4,15 +4,18 @@
     <Card v-for="card in getWeatherData" :key="card.id" :weather="card"/>
   </div>
 
+
 </template>
 
 <script>
 import SearchInput from "@/modules/weather/components/SearchInput.vue";
 import Card from "@/modules/weather/components/Card.vue";
 import {mapGetters} from "vuex";
+import TemperatureChart from "@/modules/weather/components/TemperatureCharts.vue";
 export default {
   name: "Weather",
   components: {
+    TemperatureChart,
     Card,
     SearchInput
   },
@@ -30,5 +33,6 @@ export default {
   align-items: center;
   justify-content: flex-start;
   flex-wrap: wrap;
+  padding: 20px;
 }
 </style>

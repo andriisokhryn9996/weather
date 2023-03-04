@@ -7,6 +7,7 @@ export default {
     state:{
         cityList: null,
         weatherData: [],
+        chartsData: new Map()
     },
     mutations: {
         updateCityList(state, data){
@@ -28,6 +29,9 @@ export default {
             }
 
         },
+        updateChartsData(state, data) {
+            state.chartsData.set(data.key, data.data)
+        }
     },
     actions: {
         async fetchCityList({commit}, data){
@@ -46,6 +50,19 @@ export default {
             } catch(e){
                 console.error(e.message);
             }
+        },
+        async fetchChartsData({commit}, data){
+            try {
+                const res = await axios.get(`${baseUrl}/data/2.5/forecast?lat=${data.coord.lat}&lon=${data.coord.lon}&appid=${apiKey}&units=metric`)
+
+                res.data.list = res.data.list.filter((el, idx) => {
+                    return (idx + 1) % 4 === 0
+                })
+
+                commit('updateChartsData', {key: data.id, data: res.data})
+            } catch (e) {
+                console.log(e.message)
+            }
         }
     },
     getters: {
@@ -55,5 +72,8 @@ export default {
         getWeatherData(state){
             return state.weatherData
         },
+        getChartsData(state){
+            return state.chartsData
+        }
     }
 }
