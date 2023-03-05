@@ -91,7 +91,7 @@ export default {
 
                 commit('updateChartsData', {key: data.id, data: res.data})
             } catch (e) {
-                console.log(e.message)
+                console.error(e.message)
             }
         },
         addToFavorites({commit}, data){
@@ -102,12 +102,10 @@ export default {
                     prevData.push(data)
                 } else if (idx === -1 && prevData.length === 5 ){
                     commit('updateLimitModal', true)
-                    console.log(7778)
                 } else {
                     prevData.splice(idx,1)
                 }
             } else {
-                console.log(9)
                 prevData = [data]
             }
 
@@ -132,11 +130,31 @@ export default {
 
             } catch (e) {
                 commit('updateWaitFindLocation', false)
-                console.log(e.message)
+                console.error(e.message)
             }
 
 
-        }
+        },
+
+        async updatePrev({commit}){
+            try {
+                const prev = JSON.parse(localStorage.getItem('fav'))
+                const newData = []
+                if(prev && prev.length){
+                    //?get it by iteration since I don't have an api where I can take all the cities at once
+                    for (const el of prev) {
+                        const res = await axios.get(`${baseUrl}/data/2.5/weather?q=${el.name}&appid=${apiKey}&units=metric`)
+                        newData.push(res.data)
+                    }
+                }
+
+                commit('updateFavList', newData)
+                localStorage.setItem('fav', JSON.stringify(newData))
+
+            } catch(e){
+                console.error(e.message);
+            }
+        },
     },
     getters: {
         getCityList(state){

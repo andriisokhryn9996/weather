@@ -8,7 +8,7 @@
 
 <script>
 import Card from "@/modules/weather/components/Card.vue";
-import {mapGetters, mapMutations} from "vuex";
+import {mapActions, mapGetters, mapMutations} from "vuex";
 
 export default {
   name: "Favorites",
@@ -17,10 +17,14 @@ export default {
     ...mapGetters(['getFavList'])
   },
   methods:{
-    ...mapMutations(['updateFavList'])
+    ...mapMutations(['updateFavList']),
+    ...mapActions(['updatePrev'])
   },
   mounted() {
     this.updateFavList(JSON.parse(localStorage.getItem('fav')))
+
+    //? we update the data, as there may be incorrect weather data in the local storage
+    this.updatePrev()
   }
 }
 </script>
