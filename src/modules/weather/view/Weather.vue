@@ -23,7 +23,7 @@ export default {
     SearchInput
   },
   computed: {
-    ...mapGetters(['getWeatherData'])
+    ...mapGetters(['getWeatherData', 'getUserCityWeather'])
   },
   methods:{
     ...mapMutations(['updateFavList']),
@@ -31,7 +31,10 @@ export default {
   },
   mounted() {
     this.updateFavList(JSON.parse(localStorage.getItem('fav')))
-    this.letsFindUserCity()
+    if(!this.getUserCityWeather){
+      this.letsFindUserCity()
+    }
+
   }
 }
 </script>

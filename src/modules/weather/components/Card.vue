@@ -3,7 +3,7 @@
     <div class="card">
 
       <div v-if="!isDefault" class="hearts" :class="isFavorites ? 'active-f': ''" @click="addToFavorites(weather)"> &hearts;</div>
-      <ConfirmModal v-if="!isDefault" class="card-close-button" :data="weather"></ConfirmModal>
+      <ConfirmModal v-if="!isDefault && $route.name !== 'Favorites' " class="card-close-button" :data="weather"></ConfirmModal>
       <LimitModal></LimitModal>
       <div v-if="isDefault">Your city</div>
 
@@ -109,7 +109,6 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom:1px solid grey;
 
   padding: 20px;
 }
