@@ -6,7 +6,7 @@
       <div v-if="showModal" class="modal">
         <div class="modal-content">
           <h2>Confirm the deletion</h2>
-          <img class="trash-icon" src="src/assets/images/trash-solid.svg" width="100" height="100" alt="trash-"/>
+          <img class="trash-icon" src="../../assets/images/trash-solid.svg" width="100" height="100" alt="trash-"/>
           <div class="button-wrap">
             <Button @click="remove">Confirm</Button>
             <Button @click="closeModal">Cancel</Button>
