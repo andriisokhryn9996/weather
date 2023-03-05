@@ -13,7 +13,7 @@
 <script>
 
 import {mapMutations, mapGetters} from 'vuex'
-import Button from "@/modules/weather/components/ui/Button.vue";
+import Button from "@/modules/weather/ui/Button.vue";
 
 export default {
   components: {Button},

@@ -80,14 +80,18 @@ export default {
         async fetchChartsData({commit}, data){
             try {
                 const res = await axios.get(`${baseUrl}/data/2.5/forecast?lat=${data.coord.lat}&lon=${data.coord.lon}&appid=${apiKey}&units=metric`)
-                //filter by day
-                res.data.list = res.data.list.filter((item, index, self) => {
-                    return index === self.findIndex((t) => (
-                        t.dt_txt.split(' ')[0] === item.dt_txt.split(' ')[0]
-                    ));
-                });
 
-                // res.data.list = res.data.list.splice(1,5)
+                if(data.perDays) {
+                    //filter by day
+                    res.data.list = res.data.list.filter((item, index, self) => {
+                        return index === self.findIndex((t) => (
+                            t.dt_txt.split(' ')[0] === item.dt_txt.split(' ')[0]
+                        ));
+                    });
+                } else {
+                    //filter by hours (3)
+                    res.data.list = res.data.list.splice(1,5)
+                }
 
                 commit('updateChartsData', {key: data.id, data: res.data})
             } catch (e) {

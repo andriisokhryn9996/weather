@@ -47,7 +47,6 @@ export default {
   align-items: center;
   justify-content: flex-start;
   flex-wrap: wrap;
-  padding: 20px;
 }
 
 @media (max-width: 960px) {

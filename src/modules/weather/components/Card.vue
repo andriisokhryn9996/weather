@@ -5,8 +5,7 @@
       <div v-if="!isDefault" class="hearts" :class="isFavorites ? 'active-f': ''" @click="addToFavorites(weather)"> &hearts;</div>
       <ConfirmModal v-if="!isDefault && $route.name !== 'Favorites' " class="card-close-button" :data="weather"></ConfirmModal>
       <LimitModal></LimitModal>
-      <div v-if="isDefault">Your city</div>
-
+      <div class="blink" v-if="isDefault">Your city</div>
 
       <div class="card_top">
         <div class="card_top_left">
@@ -19,20 +18,11 @@
           <h3 class="card_city">{{ weather.name }}, {{weather.sys.country}}</h3>
         </div>
       </div>
+      <div class="button-block" v-if="!isDefault">
+        <Button style="margin-right: 5px" @click="fetchChartsData({id: this.weather.id, coord: this.weather.coord, perDays: true})">Days</Button>
+        <Button @click="fetchChartsData({id: this.weather.id, coord: this.weather.coord, perDays: false})">Hours</Button>
+      </div>
       <div v-if="!isDefault" class="card_bottom">
-<!--        {{letsFindDay(weather.dt)}}-->
-<!--        <div>-->
-<!--          <ul>-->
-<!--            <li>Wind</li>-->
-<!--          </ul>-->
-<!--        </div>-->
-<!--        <div>-->
-<!--          <ul>-->
-<!--            <li>N 8 mph</li>-->
-<!--          </ul>-->
-<!--        </div>-->
-
-
         <TemperatureChart :data="getChartsData.get(this.weather.id)"></TemperatureChart>
       </div>
     </div>
@@ -45,10 +35,11 @@ import TemperatureChart from "@/modules/weather/components/TemperatureCharts.vue
 import {mapActions, mapGetters} from "vuex";
 import ConfirmModal from "@/modules/weather/components/modals/ConfirmModal.vue";
 import LimitModal from "@/modules/weather/components/modals/LimitModal.vue";
+import Button from "@/modules/weather/ui/Button.vue";
 
 export default {
   name: 'Card',
-  components: {LimitModal, ConfirmModal, TemperatureChart},
+  components: {Button, LimitModal, ConfirmModal, TemperatureChart},
   props: ['weather', 'isDefault'],
   data() {
     return {
@@ -83,7 +74,7 @@ export default {
   },
 
   async mounted() {
-   await this.fetchChartsData({id: this.weather.id, coord: this.weather.coord})
+   await this.fetchChartsData({id: this.weather.id, coord: this.weather.coord, perDays: true})
   }
 };
 </script>
@@ -137,12 +128,6 @@ export default {
 .card_bottom{
 }
 
-@media (max-width: 960px) {
-  .card_box {
-    width: 100%;
-  }
-}
-
 .card-close-button {
   font-size: 2em;
   font-weight: bold;
@@ -175,10 +160,34 @@ export default {
   color: #000 !important;
 }
 
+@keyframes blink {
+  50% {
+    color: #fff;
+  }
+}
+
+.blink {
+  font-size: 1.1em;
+  font-weight: bold;
+  animation: blink 0.8s step-end infinite;
+}
+
+@media (max-width: 960px) {
+  .card_box {
+    width: 100%;
+  }
+}
+
 @media screen and (max-width: 575px) {
   .card {
     padding: 6px;
   }
+}
+
+.button-block {
+  display: flex;
+  align-items: center;
+  justify-content: end;
 }
 
 </style>

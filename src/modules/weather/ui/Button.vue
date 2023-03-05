@@ -11,7 +11,7 @@ export default {
 <style scoped>
 .button {
   display: inline-block;
-  padding: 10px 20px;
+  padding: 0.7em 1.2em;
   border-radius: 5px;
   border: none;
   background-color: #455869;

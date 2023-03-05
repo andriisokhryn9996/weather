@@ -6,8 +6,11 @@
 
 <script>
 
+import Button from "@/modules/weather/ui/Button.vue";
+
 export default {
   name: 'TemperatureChart',
+  components: {Button},
   props:['data'],
   data() {
     return {

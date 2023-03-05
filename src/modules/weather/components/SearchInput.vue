@@ -19,7 +19,7 @@
 
 <script>
 import {mapActions, mapGetters, mapMutations} from "vuex";
-import Spinner from "@/modules/weather/components/ui/Spinner.vue";
+import Spinner from "@/modules/weather/ui/Spinner.vue";
 
 export default {
   components: {Spinner},
