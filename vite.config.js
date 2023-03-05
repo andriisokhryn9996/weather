@@ -7,7 +7,7 @@ import vue from '@vitejs/plugin-vue'
 // https://vitejs.dev/config/
 dotenv.config()
 export default defineConfig({
-  base: '/weather/',
+  base: './',
   plugins: [vue()],
   define: {
     'process.env': process.env
