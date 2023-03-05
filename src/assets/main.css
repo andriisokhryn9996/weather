@@ -1,9 +1,14 @@
 @import './base.css';
+@import '../modules/weather/assets/weather.css';
 
 #app {
   margin: 0 auto;
   font-weight: normal;
   color: #181818;
+}
+
+html {
+  min-width: 360px;
 }
 
 body {
@@ -33,7 +38,7 @@ body {
   max-width: 1200px;
   min-width: 360px;
   margin: 0 auto;
-  /*display: grid;*/
+  padding: 1em;
 }
 
 li {
@@ -47,7 +52,11 @@ ul {
 
 a{
   text-decoration: none;
-  color: var(--text-color);
+  color: #6c757d!important;
+}
+
+.active{
+  color: var(--text-color) !important;
 }
 
 input::placeholder{
@@ -67,4 +76,10 @@ input:focus {
 }
 input::-webkit-input-placeholder {
   color: #6c757d;
+}
+
+@media screen and (max-width: 575px) {
+  body {
+    font-size: 12px;
+  }
 }

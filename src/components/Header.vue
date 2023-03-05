@@ -1,6 +1,6 @@
 <template>
   <header class="header">
-    <div class="container">
+    <div class="header-block">
       <h1>
         <router-link to="/">Logo</router-link>
       </h1>
@@ -14,6 +14,7 @@
       </ul>
     </div>
   </header>
+
 </template>
 
 <script>
@@ -31,12 +32,14 @@ export default {
   border-radius: 8px;
   width: 90%;
   margin: 20px auto;
+  padding: 0 2em;
 }
-.container{
+.header-block{
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 4rem;
+  max-width: 1200px;
+  margin: auto;
 }
 .header a{
   /*color: white;*/
@@ -47,15 +50,17 @@ export default {
   color: #6c757d;
 }
 
-.active{
-  color: #6c757d!important;
-}
-
 .nav{
   display: flex;
 }
 
 .nav li:first-child{
   margin-right: 30px;
+}
+
+@media screen and (max-width: 992px) {
+  .header {
+    width: 100%;
+  }
 }
 </style>

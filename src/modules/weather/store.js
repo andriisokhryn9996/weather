@@ -7,7 +7,14 @@ export default {
     state:{
         cityList: null,
         weatherData: [],
-        chartsData: new Map()
+        chartsData: new Map(),
+        favList: [],
+        userCity: null,
+        userCityWeather: null,
+
+        waitFindLocation: false,
+
+        showLimitModal: false
     },
     mutations: {
         updateCityList(state, data){
@@ -31,6 +38,21 @@ export default {
         },
         updateChartsData(state, data) {
             state.chartsData.set(data.key, data.data)
+        },
+        updateFavList(state, data) {
+           state.favList = data
+        },
+        updateUserCity(state, data) {
+            state.userCity = data
+        },
+        updateUserCityWeather(state, data) {
+            state.userCityWeather = data
+        },
+        updateWaitFindLocation(state, data) {
+            state.waitFindLocation = data
+        },
+        updateLimitModal(state, data) {
+            state.showLimitModal = data
         }
     },
     actions: {
@@ -46,7 +68,11 @@ export default {
         async fetchWeatherData({commit}, data){
             try {
                 const res = await axios.get(`${baseUrl}/data/2.5/weather?q=${data.city}&appid=${apiKey}&units=metric`)
-                commit('updateWeatherData', res.data)
+                if(data.ip) {
+                    commit('updateUserCityWeather', res.data)
+                } else  {
+                    commit('updateWeatherData', res.data)
+                }
             } catch(e){
                 console.error(e.message);
             }
@@ -63,6 +89,49 @@ export default {
             } catch (e) {
                 console.log(e.message)
             }
+        },
+        addToFavorites({commit}, data){
+            let prevData = JSON.parse(localStorage.getItem('fav'))
+            if(prevData && prevData.length){
+                const idx = prevData.findIndex(el => el.id === data.id && el.name === data.name)
+                if(idx === -1 && prevData.length < 5 ){
+                    prevData.push(data)
+                } else if (idx === -1 && prevData.length === 5 ){
+                    commit('updateLimitModal', true)
+                    console.log(7778)
+                } else {
+                    prevData.splice(idx,1)
+                }
+            } else {
+                console.log(9)
+                prevData = [data]
+            }
+
+            commit('updateFavList', prevData)
+            localStorage.setItem('fav', JSON.stringify(prevData))
+
+
+
+        },
+
+        async letsFindUserCity({commit, dispatch}){
+            try {
+                commit('updateWaitFindLocation', true)
+                //Find IP and location
+                const res = await axios.get('https://api.ipify.org?format=json')
+                const resCity = await axios.get(`https://ipapi.co/${res.data.ip}/json/`)
+
+                commit('updateUserCity', resCity.data?.city)
+                //request to the weather of the user
+                dispatch('fetchWeatherData', {city: resCity.data?.city, ip: true})
+                commit('updateWaitFindLocation', false)
+
+            } catch (e) {
+                commit('updateWaitFindLocation', false)
+                console.log(e.message)
+            }
+
+
         }
     },
     getters: {
@@ -74,6 +143,18 @@ export default {
         },
         getChartsData(state){
             return state.chartsData
+        },
+        getFavList(state){
+            return state.favList
+        },
+        getUserCityWeather(state){
+            return state.userCityWeather
+        },
+        getWaitFindLocation(state){
+            return state.waitFindLocation
+        },
+        getShowLimitModal(state){
+            return state.showLimitModal
         }
     }
 }

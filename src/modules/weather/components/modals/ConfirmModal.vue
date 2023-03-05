@@ -6,7 +6,7 @@
       <div v-if="showModal" class="modal">
         <div class="modal-content">
           <h2>Confirm the deletion</h2>
-          <img class="trash-icon" src="src/assets/images/trash-solid.svg" width="100" height="100"/>
+          <img class="trash-icon" src="src/assets/images/trash-solid.svg" width="100" height="100" alt="trash-"/>
           <div class="button-wrap">
             <Button @click="remove">Confirm</Button>
             <Button @click="closeModal">Cancel</Button>
@@ -53,42 +53,7 @@ export default {
 </script>
 
 <style>
-.modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 4;
-}
-.modal-content {
-  width: 600px;
-  background-color: #fff;
-  border-radius: 4px;
-  overflow: hidden;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-  padding: 16px;
-  text-align: center;
-}
-.modal h2 {
-  margin-top: 0;
-}
-.modal p {
-  margin-bottom: 16px;
-}
-.button-wrap{
-  display: flex;
-  align-items: center;
-  justify-content: space-evenly;
-}
 
-.trash-icon{
-  margin: 40px 0;
-}
 
 
 </style>

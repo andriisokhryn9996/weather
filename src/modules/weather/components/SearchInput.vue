@@ -11,17 +11,18 @@
            <span>{{ Math.round(city.main.temp) }}</span>
          </li>
        </ul>
-       <div v-if="wait" class="spinner"></div>
+      <Spinner v-if="wait"></Spinner>
     </div>
 
   </div>
 </template>
 
 <script>
-import axios from 'axios';
 import {mapActions, mapGetters, mapMutations} from "vuex";
+import Spinner from "@/modules/weather/components/ui/Spinner.vue";
 
 export default {
+  components: {Spinner},
   data() {
     return {
       cityName: '',
@@ -68,7 +69,6 @@ export default {
     },
   },
   mounted() {
-
   }
 }
 </script>
@@ -93,8 +93,8 @@ export default {
   z-index:5;
   width: 100%;
   top: 110%;
-  -webkit-box-shadow: 0px 3px 11px -4px rgba(0,0,0,0.74);
-  box-shadow: 0px 3px 11px -4px rgba(0,0,0,0.74);
+  -webkit-box-shadow: 0 3px 11px -4px rgba(0,0,0,0.74);
+  box-shadow: 0 3px 11px -4px rgba(0,0,0,0.74);
   border-radius: 8px;
   background-color: #747984;
 
@@ -110,11 +110,20 @@ export default {
 .search_list li {
   padding: 8px;
   background: #e6eaed;
-  border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: all 200ms;
+}
+
+.search_list li:first-child {
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+.search_list li:last-child {
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
 }
 
 .search_list li span {
@@ -127,44 +136,5 @@ export default {
   cursor: pointer;
   padding: 8px;
 }
-
-/*spinner START*/
-
-.spinner {
-  width: 20px;
-  height: 20px;
-  position: relative;
-  margin:  auto;
-}
-
-.spinner:before {
-  content: "";
-  box-sizing: border-box;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  border: 2px solid #ccc;
-  border-top-color: #07d;
-  animation: spin 1s ease-in-out infinite;
-}
-
-@keyframes spin {
-  0% {
-    transform: rotate(0);
-  }
-  50% {
-    transform: rotate(180deg);
-    animation-timing-function: ease-out;
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
-/*spinner END*/
-
 
 </style>
