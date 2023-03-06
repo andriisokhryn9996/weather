@@ -20,7 +20,7 @@
       </div>
       <div class="button-block" v-if="!isDefault">
         <Button style="margin-right: 5px" @click="fetchChartsData({id: this.weather.id, coord: this.weather.coord, perDays: true})">Days</Button>
-        <Button @click="fetchChartsData({id: this.weather.id, coord: this.weather.coord, perDays: false})">Hours</Button>
+        <Button style="margin-right: 5px"  @click="fetchChartsData({id: this.weather.id, coord: this.weather.coord, perDays: false})">Hours</Button>
       </div>
       <div v-if="!isDefault" class="card_bottom">
         <TemperatureChart :data="getChartsData.get(this.weather.id)"></TemperatureChart>

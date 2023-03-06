@@ -1,7 +1,11 @@
 <template>
-  <h1>Favorites works</h1>
+  <h1>Favorites</h1>
     <div class="fav_wrap" v-if="getFavList && getFavList.length">
       <Card v-for="card in getFavList" :key="card.id" :weather="card"/>
+    </div>
+    <div class="nothing" v-else>
+      <h2>Oops, Nothing here:(</h2>
+      <Button @click="$router.push('/')">Back to list</Button>
     </div>
 
 </template>
@@ -9,10 +13,11 @@
 <script>
 import Card from "@/modules/weather/components/Card.vue";
 import {mapActions, mapGetters, mapMutations} from "vuex";
+import Button from "@/modules/weather/ui/Button.vue";
 
 export default {
   name: "Favorites",
-  components: {Card},
+  components: {Button, Card},
   computed: {
     ...mapGetters(['getFavList'])
   },
@@ -36,6 +41,18 @@ export default {
     justify-content: flex-start;
     flex-wrap: wrap;
     padding: 20px;
+  }
+
+  .nothing{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin: 3em auto;
+  }
+
+  .nothing h2{
+    margin-bottom: 1.5em;
+    font-weight: 600;
   }
 
   @media (max-width: 960px) {
